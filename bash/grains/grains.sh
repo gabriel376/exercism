@@ -3,15 +3,22 @@ MIN=1
 
 function count() {
 	if [[ $1 == "total" ]]; then
-		echo "(2^$MAX)-1" | bc
+		# TODO:  use << here without overflow
+		printf "%llu\n" $((2**$MAX-1))
 		exit 0
 
 	elif [[ $1 -lt $MIN || $1 -gt $MAX ]]; then
-		echo "Error: invalid input"
+		printf "%s\n" "Error: invalid input"
 		exit 1
 
+	# TODO: remove this condition and
+	# let it go on else clause
+	elif [[ $1 -eq $MIN ]]; then
+		printf "%llu\n" $MIN
+		exit 0
+
 	else
-		echo "2^($1-1)" | bc
+		printf "%llu\n" $((2 << ($1-2)))
 		exit 0
 	fi
 }
