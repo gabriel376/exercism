@@ -3,42 +3,38 @@
 #include <string.h>
 #include <ctype.h>
 
-#define END_OF_STRING '\0'
-#define MAX_ARRAY 100
-
-void add_letter(char *acronym, const char *letter) {
-	int len = strlen(acronym);
-	char *buffer = realloc(acronym, (len + 2) * sizeof(char));
-	
-	if (buffer == NULL) {
-		printf("Error allocating memory\n");
-		free(acronym);
-		exit(1);
-	}
-
-	acronym = buffer;
-	acronym[len] = toupper(*letter);
-	acronym[len + 1] = END_OF_STRING;
-}
+#define BUFFER_LEN 254
 
 char *abbreviate(const char *phrase) {
-	char *acronym = malloc(0);
-	int add = 1;
+  if (phrase == NULL || phrase[0] == '\0') {
+    return NULL;
+  }
 
-	if (phrase == NULL || phrase[0] == END_OF_STRING) {
-		return NULL;
-	}
+  char *acronym = NULL;
+  int len = 0;
+  int add = 1;
 
-	for (int i = 0; phrase[i] != END_OF_STRING; i++) {
-		if (add) {
-			add = 0;
-			add_letter(acronym, &phrase[i]);
-		}
+  for (int i = 0; phrase[i] != '\0'; i++) {
+    if (add) {
+      if (len % BUFFER_LEN == 0) {
+        int buffer_size = BUFFER_LEN * ((len / BUFFER_LEN) + 1);
+        acronym = realloc(acronym, (buffer_size + 2) * sizeof(char));
+        if (acronym == NULL) {
+          free(acronym);
+          printf("Error allocating memory.\n");
+          exit(EXIT_FAILURE);
+        }
+      }
+      acronym[len] = toupper(phrase[i]);
+      acronym[len + 1] = '\0';  
+      len++;
+      add = 0;
+    }
 
-		if (phrase[i] == ' '|| phrase[i] == '-') {
-			add = 1;
-		}
-	}
+    if (phrase[i] == ' ' || phrase[i] == '-') {
+      add = 1;
+    }
+  }
 
-	return acronym;
+  return acronym;
 }
