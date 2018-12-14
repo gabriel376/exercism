@@ -4,18 +4,18 @@ import java.time.LocalTime;
 
 class Gigasecond {
 
-    private LocalDateTime birthDateTime;
-    final private long GIGA = 1000000000;
+    private static final long GIGA = 1_000_000_000;
+    private final LocalDateTime dateTime;
 
-    Gigasecond(LocalDate birthDate) {
-        this.birthDateTime = LocalDateTime.of(birthDate, LocalTime.of(0, 0, 0));
+    Gigasecond(LocalDate date) {
+        this(date.atTime(0, 0));
     }
 
-    Gigasecond(LocalDateTime birthDateTime) {
-        this.birthDateTime = birthDateTime;
+    Gigasecond(LocalDateTime dateTime) {
+        this.dateTime = dateTime.plusSeconds(GIGA);
     }
 
     LocalDateTime getDateTime() {
-        return this.birthDateTime.plusSeconds(this.GIGA);
+        return dateTime;
     }
 }
