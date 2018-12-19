@@ -1,6 +1,6 @@
 #ifndef HAMMING_H
 #define HAMMING_H
 
-int compute(const char* const a, const char* const b);
+int compute(const char* a, const char* b);
 
 #endif
