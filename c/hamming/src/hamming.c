@@ -1,25 +1,24 @@
 #include <stddef.h>
 #include "hamming.h"
 
-int compute(char *a, char *b) {
-  int error = -1;
-  int diff = 0;
-  int i = 0;
-  
-  if (a == NULL || b == NULL) {
+int compute(const char* const left, const char* const right) {
+  int const error = -1;
+  int distance = 0;
+  int index = 0;
+
+  if (left == NULL || right == NULL) {
     return error;
   }
 
-  while (1) {
-    if (a[i] == '\0' && b[i] == '\0')
-      return diff;
+  for (index = 0; left[index] != '\0'; index++) {
+    if (left[index] != right[index]) {
+      distance++;
+    }
+  }
 
-    if (a[i] == '\0' || b[i] == '\0')
-      return error;
-
-    if (a[i] != b[i])
-      diff++;
-
-    i++;
+  if (right[index] == '\0') {
+    return distance;
+  } else {
+    return error;
   }
 }
