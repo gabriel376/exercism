@@ -1,63 +1,52 @@
+struct Bottle {
+    n: i32,
+}
+
+impl Bottle {
+    fn new(n: i32) -> Bottle {
+        Bottle {
+            n: if n >= 0 { n } else { 99 },
+        }
+    }
+
+    fn count(&self) -> String {
+        let count = if self.n > 0 {
+            self.n.to_string()
+        } else {
+            String::from("No more")
+        };
+        let plural = if self.n != 1 { "s" } else { "" };
+        format!("{} bottle{}", count, plural)
+    }
+
+    fn action(&self) -> String {
+        String::from(match self.n {
+            0 => "Go to the store and buy some more",
+            1 => "Take it down and pass it around",
+            _ => "Take one down and pass it around",
+        })
+    }
+
+    fn drink(&self) -> Bottle {
+        Bottle::new(self.n - 1)
+    }
+}
+
 pub fn verse(n: i32) -> String {
-	println!("{}",n);
-	let current = get_bottle_msg(n);
-	let action = get_action_msg(n);
-	let next = get_bottle_msg(n-1);
-
-	String::from(
-		format!(
-			"{} of beer on the wall, {} of beer.\n{}, {} of beer on the wall.\n",
-			current,
-			current.to_lowercase(),
-			action,
-			next.to_lowercase()
-		)
-	)
-}
-
-fn get_bottle_msg(i: i32) -> String {
-	let message;
-
-	if i < 0 {
-		message = String::from("99 bottles");
-	
-	} else if i == 0 {
-		message = String::from("No more bottles");
-	
-	} else if i == 1 {
-		message = String::from("1 bottle");
-	
-	} else {
-		message = String::from(format!("{} bottles", i));
-	}
-
-	message
-}
-
-fn get_action_msg(i: i32) -> String {
-	let message;
-
-	if i == 0 {
-		message = String::from("Go to the store and buy some more");
-
-	} else if i == 1 {
-		message = String::from("Take it down and pass it around");
-
-	} else {
-		message = String::from("Take one down and pass it around");
-	}
-
-	message
+    let bottle = Bottle::new(n);
+    format!(
+        "{} of beer on the wall, {} of beer.\n{}, {} of beer on the wall.\n",
+        bottle.count(),
+        bottle.count().to_lowercase(),
+        bottle.action(),
+        bottle.drink().count().to_lowercase()
+    )
 }
 
 pub fn sing(start: i32, end: i32) -> String {
-	let mut song = String::from("");
-
-	for i in (end-1..start).rev() {
-		song.push_str(&verse(i+1));
-		song.push_str("\n");
-	}
-
-	song.pop();
-	song
+    (end..start + 1)
+        .rev()
+        .map(|n| verse(n))
+        .collect::<Vec<String>>()
+        .join("\n")
 }
