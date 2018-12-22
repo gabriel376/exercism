@@ -5,8 +5,8 @@ import java.time.LocalTime;
 class Gigasecond {
 
     private static final long GIGA = 1_000_000_000;
-    private final LocalDateTime dateTime;
-
+    private final LocalDateTime dateTime;    
+        
     Gigasecond(LocalDate date) {
         this(date.atTime(0, 0));
     }

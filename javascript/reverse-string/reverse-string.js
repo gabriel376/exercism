@@ -1,7 +1,5 @@
-function reverseString(str) {
-	return Array.from(str)
-		.reverse()
-		.join("");
-}
-
-export default reverseString;
+export const reverseString = str => {
+    return Array.from(str)
+        .reverse()
+	.join("");
+};

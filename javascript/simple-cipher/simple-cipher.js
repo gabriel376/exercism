@@ -57,23 +57,21 @@ const transform = (key, str, mod) => {
         .join('');
 };
 
-module.exports = {
-    Cipher(key) {
-        if (key == '')
-            error();
-        else if (key)
-            check(key);
-        else
-            key = generate();
+export const Cipher = key => {
+    if (key == '')
+        error();
+    else if (key)
+        check(key);
+    else
+        key = generate();
 
-        return {
-            key: key,
-            encode(str) {
-                return transform(key, str, 1);
-            },
-            decode(str) {
-                return transform(key, str, -1);
-            },
-        };
-    },
+    return {
+        key: key,
+        encode(str) {
+            return transform(key, str, 1);
+        },
+        decode(str) {
+            return transform(key, str, -1);
+        },
+    };
 };

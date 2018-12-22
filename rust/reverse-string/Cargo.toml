@@ -1,8 +1,9 @@
-[package]
-name = "reverse_string"
-version = "1.0.0"
+[dependencies]
 
 [features]
 grapheme = []
 
-[dependencies]
+[package]
+edition = "2018"
+name = "reverse_string"
+version = "1.1.0"

@@ -20,9 +20,7 @@ const pivot = (arr) => {
 
 const SCORES_BY_LETTER = pivot(SCORES_BY_VALUE);
 
-module.exports = {
-    score(str) {
-        return Array.from(str.toUpperCase())
-            .reduce((a, b) => a + SCORES_BY_LETTER[b], 0);
-    }
+export const score = str => {
+    return Array.from(str.toUpperCase())
+        .reduce((a, b) => a + SCORES_BY_LETTER[b], 0);
 };

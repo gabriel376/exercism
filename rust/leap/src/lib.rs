@@ -1,3 +1,8 @@
 pub fn is_leap_year(year: u64) -> bool {
-    ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
+    let div_by = |x| year % x == 0;
+    match (div_by(4), div_by(100), div_by(400)) {
+        (true, false, _) => true,
+        (_, _, true) => true,
+        (_, _, _) => false,
+    }
 }

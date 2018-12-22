@@ -11,7 +11,7 @@ void add_letter(char **acronym, const char *letter, int index) {
     len = 0;
   }
 
-  if (len % BUFFER_LEN == 0) {
+  if (len % BUFFER_LEN == 0) {  
     int buffer_size = BUFFER_LEN * ((len / BUFFER_LEN) + 1);
     *acronym = realloc(*acronym, (buffer_size + 2) * sizeof(char));
     if (acronym == NULL) {
@@ -22,7 +22,7 @@ void add_letter(char **acronym, const char *letter, int index) {
   }
 
   (*acronym)[len] = toupper(*letter);
-  (*acronym)[len + 1] = '\0';
+  (*acronym)[len + 1] = '\0';  
   len++;
 }
 

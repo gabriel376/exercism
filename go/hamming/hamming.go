@@ -8,9 +8,9 @@ import (
 // Both DNA strands must have the same length.
 func Distance(left, right string) (int, error) {
 	if len(left) != len(right) {
-		return -1, errors.New("left and right strands must be of equal length")
+		return 0, errors.New("left and right strands must be of equal length")
 	}
-	
+
 	dist := 0
 	for idx := range left {
 		if left[idx] != right[idx] {
