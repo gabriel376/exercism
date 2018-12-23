@@ -3,19 +3,15 @@
 function is_armstrong_number() {
     local num=$1
     local len=${#num}
-    local count=0
     local total=0
 
-    while [ $count -lt $len ]
-    do
-        local char=${num:count:1}
-        local power=$(( char ** len ))
+    for (( i=0; i<len; i++ )); do
+        local digit=${num:i:1}
+        local power=$(( digit ** len ))
         total=$(( total + power ))
-        count=$(( count + 1 ))
     done
 
-    if [ $total -eq $num ]
-    then
+    if [ $total -eq $num ]; then
         echo "true"
     else
         echo "false"
