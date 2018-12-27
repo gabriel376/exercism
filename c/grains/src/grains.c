@@ -8,7 +8,7 @@ unsigned long long square(int n) {
 
 unsigned long long total() {
   unsigned long long grains = 0;
-  for (int i = 1; i <= MAX; i++) {
+  for (int i = MIN; i <= MAX; i++) {
     grains += square(i);
   }
   return grains;
