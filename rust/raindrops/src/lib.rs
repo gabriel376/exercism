@@ -1,16 +1,13 @@
 pub fn raindrops(num: usize) -> String {
-    let mut msg = String::from("");
+    let drops = [(3, "Pling"), (5, "Plang"), (7, "Plong")];
 
-    let mut drop = |fac, str| {
-        if num % fac == 0 {
-            msg.push_str(str);
-            return true;
-        }
-        return false;
-    };
+    let sound = drops
+        .iter()
+        .filter(|(value, _)| num % value == 0)
+        .fold(String::new(), |a, (_, sound)| a + sound);
 
-    match (drop(3, "Pling"), drop(5, "Plang"), drop(7, "Plong")) {
-        (false, false, false) => num.to_string(),
-        (_, _, _) => msg,
+    match sound.len() {
+        0 => num.to_string(),
+        _ => sound,
     }
 }
