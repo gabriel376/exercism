@@ -1,8 +1,7 @@
 import re
 
-pattern = re.compile(r"\w+\'?\w?")
+PATTERN = re.compile(r"(?:^| |-)([a-zA-Z])")
 
 def abbreviate(text):
-    words = pattern.findall(text)
-    acronym = [w[0] for w in words]
+    acronym = PATTERN.findall(text)
     return ''.join(acronym).upper()
