@@ -18,7 +18,7 @@ func init() {
 
 	for score, upper := range scoresByValue {
 		lower := strings.ToLower(upper)
-		for i, _ := range upper {
+		for i := range upper {
 			scoresByChar[upper[i]] = score
 			scoresByChar[lower[i]] = score
 		}
@@ -31,7 +31,7 @@ func init() {
 func Score(text string) int {
 	total := 0
 
-	for i, _ := range text {
+	for i := range text {
 		score, ok := scoresByChar[text[i]]
 		if ok {
 			total += score
