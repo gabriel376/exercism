@@ -1,60 +1,54 @@
-#define _GNU_SOURCE
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
 
 #include "beer_song.h"
 
-char* get_bottles(int index) {
-  char *buffer = NULL;
-
-  if (index < 0) {
-    index = 99;
-  }
+static char* get_bottles(const int index) {
+  char *buffer = malloc(32);
 
   switch (index) {
   case 0:
-    asprintf(&buffer, "no more bottles");
+    sprintf(buffer, "no more bottles");
     break;
   case 1:
-    asprintf(&buffer, "1 bottle");
+    sprintf(buffer, "1 bottle");
     break;
   default:
-    asprintf(&buffer, "%d bottles", index);
+    sprintf(buffer, "%d bottles", index < 0 ? 99 : index);
     break;
   }
 
   return buffer;
 }
 
-char* get_action(int index) {
-  char *buffer= NULL;
+static char* get_action(const int index) {
+  char *buffer= malloc(64);
 
   switch (index) {
   case 0:
-    asprintf(&buffer, "Go to the store and buy some more");
+    sprintf(buffer, "Go to the store and buy some more");
     break;
   case 1:
-    asprintf(&buffer, "Take it down and pass it around");
+    sprintf(buffer, "Take it down and pass it around");
     break;
   default:
-    asprintf(&buffer, "Take one down and pass it around");
+    sprintf(buffer, "Take one down and pass it around");
     break;
   }
 
   return buffer;
 }
 
-void verse(char *buffer, int index) {
+int verse(char * const buffer, const int index) {
   char *current = get_bottles(index);
   char *repeat = get_bottles(index);
   char *action = get_action(index);
   char *next = get_bottles(index-1);
 
   current[0] = toupper(current[0]);
-  sprintf(buffer,
+
+  int len = sprintf(buffer,
           "%s of beer on the wall, %s of beer.\n%s, %s of beer on the wall.\n",
           current,
           repeat,
@@ -65,14 +59,19 @@ void verse(char *buffer, int index) {
   free(repeat);
   free(action);
   free(next);
+
+  return len;
 }
 
-void sing(char *buffer, int start, int end) {
+int sing(char * const buffer, const int start, const int end) {
+  int len = 0;
+
   for (int i = start; i >= end; i--) {
-    verse(buffer, i);
+    len += verse(buffer+len, i);
     if (i > end) {
-      strcat(buffer, "\n");
+      len += sprintf(buffer+len, "\n");
     }
-    buffer += strlen(buffer);
   }
+
+  return len;
 }
