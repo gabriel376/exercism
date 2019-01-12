@@ -5,17 +5,17 @@ import (
 )
 
 var scoresByChar = make(map[byte]int)
+var scoresByValue = map[int]string{
+	1:  "AEIOULNRST",
+	2:  "DG",
+	3:  "BCMP",
+	4:  "FHVWY",
+	5:  "K",
+	8:  "JX",
+	10: "QZ",
+}
 
 func init() {
-	scoresByValue := make(map[int]string)
-	scoresByValue[1] = "AEIOULNRST"
-	scoresByValue[2] = "DG"
-	scoresByValue[3] = "BCMP"
-	scoresByValue[4] = "FHVWY"
-	scoresByValue[5] = "K"
-	scoresByValue[8] = "JX"
-	scoresByValue[10] = "QZ"
-
 	for score, upper := range scoresByValue {
 		lower := strings.ToLower(upper)
 		for i := range upper {
@@ -30,13 +30,10 @@ func init() {
 // range a-zA-Z are ignored.
 func Score(text string) int {
 	total := 0
-
 	for i := range text {
-		score, ok := scoresByChar[text[i]]
-		if ok {
+		if score, ok := scoresByChar[text[i]]; ok {
 			total += score
 		}
 	}
-
 	return total
 }
