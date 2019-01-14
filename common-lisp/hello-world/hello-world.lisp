@@ -5,5 +5,5 @@
 
 (in-package #:hello-world)
 
-(defun hello-world(&optional (name "World"))
-  (format nil "Hello ~a!" name))
+(defun hello-world()
+  "Hello, World!")
