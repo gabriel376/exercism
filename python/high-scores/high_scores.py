@@ -9,11 +9,15 @@ class HighScores(object):
         return max(self.scores)
 
     def personal_top(self):
-        return sorted(self.scores, reverse=True)[0:3]
+        return sorted(self.scores, reverse=True)[:3]
 
     def report(self):
         latest = self.latest()
         best = self.personal_best()
         diff = best - latest
-        result = "{} short of your personal best!".format(diff) if diff else "your personal best!"
-        return "Your latest score was {}. That's {}".format(latest, result)
+
+        score = "Your latest score was {}.".format(latest)
+        short = "That's {} short of your personal best!".format(diff)
+        best = "That's your personal best!"
+
+        return "{} {}".format(score, short if diff else best)
