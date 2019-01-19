@@ -2,18 +2,16 @@ package reverse
 
 import (
 	"strings"
-	"unicode/utf8"
 )
 
 // String reverses the runes of a given string
 func String(text string) string {
-	var rev strings.Builder
-	size := len(text)
-	for size > 0 {
-		r, i := utf8.DecodeLastRuneInString(text)
-		rev.WriteRune(r)
-		size = size - i
-		text = text[:size]
+	var output strings.Builder
+	runes := []rune(text)
+
+	for i := len(runes) - 1; i >= 0; i-- {
+		output.WriteRune(runes[i])
 	}
-	return rev.String()
+
+	return output.String()
 }
