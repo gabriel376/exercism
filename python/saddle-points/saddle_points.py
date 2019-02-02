@@ -1,15 +1,12 @@
 def saddle_points(matrix):
-    points = []
-
     if len(set(map(len, matrix))) > 1:
         raise ValueError('irregular matrix not allowed')
 
-    for x, row in enumerate(matrix):
-        for y, value in enumerate(row):
-            col = [r[y] for r in matrix]
-            if value == max(row) and value == min(col):
-                point = (x+1, y+1)
-                points.append(point)
+    t_matrix = list(zip(*matrix))
+
+    points = [(x+1, y+1)
+              for x, row in enumerate(matrix)
+              for y, col in enumerate(t_matrix)
+              if matrix[x][y] == max(row) and matrix[x][y] == min(col)]
 
     return set(points)
-
