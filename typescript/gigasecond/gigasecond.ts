@@ -1,11 +1,12 @@
-class Gigasecond {
-    private _date: Date;
-    constructor(d: Date) {
-        this._date = new Date(d.getTime() + 1e12);
+const GIGA: number = 1e9;
+const SECOND: number = 1e3;
+const GIGASECOND: number = GIGA * SECOND;
+
+export default class Gigasecond {
+    constructor(private readonly start: Date) {
+
     }
     date(): Date {
-        return this._date;
+        return new Date(this.start.getTime() + GIGASECOND);
     }
 }
-
-export default Gigasecond;
