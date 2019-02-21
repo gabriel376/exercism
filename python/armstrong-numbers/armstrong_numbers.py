@@ -1,5 +1,5 @@
 def is_armstrong(num):
-    num_str = str(num)
-    exp = len(num_str)
-    total = sum([int(x)**exp for x in num_str])
+    digits = [int(d) for d in str(num)]
+    exp = len(digits)
+    total = sum(d**exp for d in digits)
     return total == num
