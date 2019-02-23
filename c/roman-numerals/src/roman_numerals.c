@@ -7,7 +7,7 @@ typedef struct {
     const char *symbol;
 } Numeral;
 
-const Numeral NUMERALS[] = {
+static const Numeral NUMERALS[] = {
   { 1000, "M"  },
   {  900, "CM" },
   {  500, "D"  },
@@ -28,15 +28,15 @@ char* to_roman_numeral(int number) {
 
   int index = 0;
   while (number > 0) {
-    Numeral numeral = NUMERALS[index];
+    const Numeral *numeral = &NUMERALS[index];
 
-    if (number < numeral.value) {
+    if (number < numeral->value) {
       index++;
       continue;
     }
 
-    number -= numeral.value;
-    strcat(symbols, numeral.symbol);
+    number -= numeral->value;
+    strncat(symbols, numeral->symbol, 2);
   }
 
   return symbols;
