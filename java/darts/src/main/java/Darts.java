@@ -11,9 +11,9 @@ class Darts {
     }
 
     int score() {
-        for (int i = 0; i < circles.length; i++) {
-            if (dart.hasLandedOn(circles[i])) {
-                return circles[i].score();
+        for (Circle circle : circles) {
+            if (dart.hasLandedOn(circle)) {
+                return circle.score();
             }
         }
         return 0;
