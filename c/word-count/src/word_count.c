@@ -1,83 +1,66 @@
+#include "word_count.h"
+
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
 
-#include "word_count.h"
-
-void clear(char *buffer) {
-  strcpy(buffer, "");
+static bool in_word(const char * const text, const int index) {
+    const char previous = index == 0 ? '\0' : text[index - 1];
+    const char current = text[index];
+    const char next = text[index + 1];
+    return isalnum(current) ||
+        (isalpha(previous) && current == '\'' && isalpha(next));
 }
 
-bool in_word(const char *text, int index) {
-  char this = text[index];
-  char previous = index == 0 ? '\0' : text[index - 1];
-  char next = text[index + 1];
-  return isalnum(this) || (isalpha(previous) && this == '\'' && isalpha(next));
-}
-
-void fill(char *buffer, char c) {
-  int i = strlen(buffer);
-  buffer[i] = c;
-  buffer[i + 1] = '\0';
-}
-
-int find(char *text, word_count_word_t *words) {
-  for (int i = 0; words[i].count > 0; i++) {
-    if (strcmp(words[i].text, text) == 0) {
-      return i;
+static int find(const char * const text, const word_count_word_t * const words) {
+    for (int i = 0; words[i].count > 0; i++) {
+        if (strcmp(words[i].text, text) == 0) {
+            return i;
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
-int count(word_count_word_t *words) {
-  int i = 0;
-  while (words[i].count > 0) i++;
-  return i;
-}
+int word_count(const char * const text, word_count_word_t * const words) {
+    char word[MAX_WORD_LENGTH];
+    int len = 0;
+    int count = 0;
+    int i = 0;
 
-void add(char *text, word_count_word_t *words) {
-  int i = count(words);
-  strcpy(words[i].text, text);
-  words[i].count = 1;
-}
+    memset(words, 0, MAX_WORDS * sizeof(word_count_word_t));
 
-int word_count(const char *text, word_count_word_t *words) {
-  memset(words, 0, MAX_WORDS * sizeof(word_count_word_t));
+    do {
+        if (len > MAX_WORD_LENGTH) {
+            return EXCESSIVE_LENGTH_WORD;
+        }
 
-  char buffer[MAX_WORD_LENGTH];
-  clear(buffer);
+        if (count >= MAX_WORDS) {
+            return EXCESSIVE_NUMBER_OF_WORDS;
+        }
 
-  int i = 0;
-  while (1) {
-    if (strlen(buffer) > MAX_WORD_LENGTH) {
-      return EXCESSIVE_LENGTH_WORD;
-    }
+        if (in_word(text, i)) {
+            word[len++] = tolower(text[i]);
+            word[len] = '\0';
+            continue;
+        }
 
-    if (in_word(text, i)) {
-      fill(buffer, tolower(text[i]));
+        if (len == 0) {
+            continue;
+        }
 
-    } else if (buffer[0] != '\0') {
-      int index = find(buffer, words);
-      if (index >= 0) {
-        words[index].count++;
+        const int index = find(word, words);
+        if (index >= 0) {
+            words[index].count++;
 
-      } else if (count(words) >= MAX_WORDS) {
-        return EXCESSIVE_NUMBER_OF_WORDS;
+        } else {
+            strcpy(words[count].text, word);
+            words[count++].count = 1;
+        }
 
-      } else {
-        add(buffer, words);
-      }
+        strcpy(word, "");
+        len = 0;
 
-      clear(buffer);
-    }
+    } while (text[i++] != '\0');
 
-    if (text[i] == '\0') {
-      break;
-    }
-
-    i++;
-  }
-
-  return count(words);
+    return count;
 }
