@@ -2,58 +2,29 @@
 #include <string.h>
 #include "bracket_push.h"
 
-#define DELIMITERS_LEN 3
-char DELIMITERS[DELIMITERS_LEN][2] = {
-  { '[', ']' },
-  { '{', '}' },
-  { '(', ')' },
+static const int DELIMITERS_LEN = 3;
+static const char DELIMITERS[][2] = {
+    {'(', ')'},
+    {'[', ']'},
+    {'{', '}'},
 };
 
-bool is_delimiter(char symbol, int type) {
-  for (int i = 0; i < DELIMITERS_LEN; i++) {
-    if (symbol == DELIMITERS[i][type]) {
-      return true;
-    }
-  }
-  return false;
-}
-
-bool is_delimiter_open(char symbol) {
-  return is_delimiter(symbol, 0);
-}
-
-bool is_delimiter_close(char symbol) {
-  return is_delimiter(symbol, 1);
-}
-
-bool is_match(char open, char close) {
-  for (int i = 0; i < DELIMITERS_LEN; i++) {
-    if (open == DELIMITERS[i][0] && close == DELIMITERS[i][1]) {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool is_paired(const char *input) {
-  char buffer[strlen(input) + 1];
-  int len = 0;
+    int stack[strlen(input)];
+    int pos = 0;
 
-  for (int i = 0; input[i] != '\0'; i++) {
-    if (is_delimiter_open(input[i])) {
-      len++;
-      buffer[len - 1] = input[i];
+    for (int i = 0; input[i] != '\0'; i++) {
+        for (int j = 0; j < DELIMITERS_LEN; j++) {
+            if (input[i] == DELIMITERS[j][0]) {
+                stack[pos++] = j;
 
-    } else if (is_delimiter_close(input[i]) && len > 0) {
-      if (is_match(buffer[len - 1], input[i])) {
-        buffer[len - 1] = '\0';
-        len--;
-
-      } else {
-        return false;
-      }
+            } else if (input[i] == DELIMITERS[j][1]) {
+                if (pos > 0 && stack[--pos] != j) {
+                    return false;
+                }
+            }
+        }
     }
-  }
 
-  return len == 0;
+    return pos == 0;
 }
