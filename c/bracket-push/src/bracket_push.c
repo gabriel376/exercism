@@ -19,7 +19,7 @@ bool is_paired(const char *input) {
                 stack[pos++] = j;
 
             } else if (input[i] == DELIMITERS[j][1]) {
-                if (pos > 0 && stack[--pos] != j) {
+                if (pos == 0 || stack[--pos] != j) {
                     return false;
                 }
             }
