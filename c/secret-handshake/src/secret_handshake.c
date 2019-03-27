@@ -1,24 +1,24 @@
 #include <stdlib.h>
 #include "secret_handshake.h"
 
-#define LEN 4
-
-const char *COMMANDS[LEN] = {
+static const char *COMMANDS[] = {
   "wink",
   "double blink",
   "close your eyes",
   "jump",
+  NULL
 };
 
-const char** commands(int secret) {
-  const char **result = malloc(LEN * sizeof(char*));
+static const int LEN = (sizeof(COMMANDS) / sizeof(char*)) - 1;
 
+const char** commands(const int secret) {
+  const char **result = malloc(LEN * sizeof(char*));
+  const int rev = secret & (1 << LEN);
   int count = 0;
-  int rev = secret & (1 << LEN);
+
   for (int i = rev ? LEN - 1 : 0; rev ? i >= 0 : i < LEN; rev ? i-- : i++) {
       if (secret & (1 << i)) {
-        result[count] = COMMANDS[i];
-        count++;
+        result[count++] = COMMANDS[i];
       }
     }
 
