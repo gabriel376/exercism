@@ -13,11 +13,11 @@ function sum_of_squares {
     for (( i=1; i<=$1; i++ )); do
         sum=$(( sum + (i * i) ))
     done
-    echo $sum
+    echo "$sum"
 }
 
 function difference {
-    echo $(( `square_of_sum $1` - `sum_of_squares $1` ))
+    echo $(( $(square_of_sum $1) - $(sum_of_squares $1) ))
 }
 
-$1 $2
+"$1" "$2"
