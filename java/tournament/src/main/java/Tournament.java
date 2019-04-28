@@ -46,10 +46,6 @@ public class Tournament {
             return table.toString();
         }
 
-        Comparator<Team> comparator = Comparator.comparing(Team::getPoints)
-                                                .reversed()
-                                                .thenComparing(Comparator.comparing(Team::getName));
-
        teams.values()
             .stream()
             .sorted(COMPARATOR)
