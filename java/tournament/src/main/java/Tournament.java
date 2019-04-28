@@ -42,10 +42,6 @@ public class Tournament {
                                            "L",
                                            "P"));
 
-        if (teams.isEmpty()) {
-            return table.toString();
-        }
-
        teams.values()
             .stream()
             .sorted(COMPARATOR)
