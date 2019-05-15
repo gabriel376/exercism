@@ -1,16 +1,16 @@
 #!/bin/bash
 
-PURE_BASH=1
+pure_bash=1
 
-TEXT=$1
-LEN=${#TEXT}
+text="$1"
+len=${#text}
 
-if [[ $PURE_BASH == 0 ]]; then
-    echo $TEXT | rev
+if (( $pure_bash == 0 )); then
+    echo "$text" | rev
 
 else
-    for (( i=$LEN-1; i>=0; i--)); do
-        REVERSED+=${TEXT:$i:1}
+    for (( i=$len-1; i>=0; i--)); do
+        reversed+=${text:$i:1}
     done
-    echo $REVERSED
+    echo "$reversed"
 fi
