@@ -2,18 +2,18 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 class Triangle {
     private Set<Double> distinctSides = new HashSet<>();
 
     Triangle(double side1, double side2, double side3) throws TriangleException {
-        List<Double> sides = new ArrayList<>(Arrays.asList(side1, side2, side3));
+        List<Double> sides = Arrays.asList(side1, side2, side3);
 
+        Double min = sides.stream().min(Double::compare).get();
         Double max = sides.stream().max(Double::compare).get();
         Double sum = sides.stream().mapToDouble(Double::doubleValue).sum();
 
-        if (max <= 0 || 2*max > sum) {
+        if (min <= 0 || 2*max > sum) {
             throw new TriangleException();
         }
 
