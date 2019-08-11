@@ -2,62 +2,111 @@ class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
+        this.previous = null;
     }
 }
 
 export class LinkedList {
     constructor() {
-        this.head = new Node(null);
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     push(value) {
-        let node = this.head;
-        while (node.next) {
-            node = node.next;
+        let node = new Node(value);
+        this.size++;
+
+        if (this.size == 1) {
+            this.head = node;
+            this.tail = node;
+
+        } else {
+            node.previous = this.tail;
+            this.tail.next = node;
+            this.tail = node;
         }
-        node.next = new Node(value);
     }
 
     pop() {
-        let node = this.head;
-        while (node.next && node.next.next) {
-            node = node.next;
+        let node = this.tail;
+        this.size--;
+
+        if (this.size == 0) {
+            this.head = null;
+            this.tail = null;
+
+        } else {
+            this.tail = this.tail.previous;
+            this.tail.next = null;
         }
-        let value =  node.next.value;
-        node.next = null;
-        return value;
+
+        return node.value;
     }
 
     shift() {
-        let value = this.head.next.value;
-        this.head.next = this.head.next.next;
-        return value;
+        let node = this.head;
+        this.size--;
+
+        if (this.size == 0) {
+            this.head == null;
+            this.tail == null;
+
+        } else {
+            this.head = this.head.next;
+            this.head.previous = null;
+        }
+
+        return node.value;
     }
 
     unshift(value) {
-        let node = this.head.next;
-        this.head.next = new Node(value);
-        this.head.next.next = node;
+        let node = new Node(value);
+        this.size++;
+
+        if (this.size == 1) {
+            this.head = node;
+            this.tail = node;
+
+        } else {
+            node.next = this.head;
+            this.head.previous = node;
+            this.head = node;
+        }
     }
 
     delete(value) {
         let node = this.head;
-        while (node.next) {
-            if (node.next.value == value) {
-                node.next = node.next.next;
-                return;
-            }
+
+        while (node && node.value != value) {
             node = node.next;
         }
+
+        if (!node) {
+            return;
+        }
+
+        if (this.size == 1) {
+            this.head = null;
+            this.tail = null;
+
+        } else if (node == this.head) {
+            node.previous = null;
+            this.head = node.next;
+
+        } else if (node == this.tail) {
+            node.next = null;
+            this.tail = node.previous;
+
+        } else {
+            node.next.previous = node.previous;
+            node.previous.next = node.next;
+        }
+
+        this.size--;
     }
 
     count() {
-        let total = 0;
-        let node = this.head;
-        while (node.next) {
-            node = node.next;
-            total += 1;
-        }
-        return total;
+        return this.size;
     }
 }
