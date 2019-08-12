@@ -7,18 +7,19 @@ export default class ComputeCell extends InputCell {
         this.inputs = inputs;
         this.computer = computer;
 
-        inputs.forEach(input => input.Notifier.on('InputCellUpdated', this, 'update', _ => {}));
+        inputs.forEach(input => input.Notifier.on('InputCellUpdated', this, 'update'));
     }
 
     update() {
-        let value = this.computer(this.inputs);
-        if (this.value == value) return;
-        this.value = value;
-        this.Notifier.notify('ComputeCellUpdated');
+        const value = this.computer(this.inputs);
+        if (this.value !== value) {
+            this.value = value;
+            this.Notifier.notify('ComputeCellUpdated');
+        }
     }
 
     addCallback(cell) {
-        this.Notifier.on('ComputeCellUpdated', cell, 'update', _ => this.value);
+        this.Notifier.on('ComputeCellUpdated', cell, 'update', () => this);
     }
 
     removeCallback(cell) {

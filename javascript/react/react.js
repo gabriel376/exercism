@@ -6,4 +6,4 @@ export {
     InputCell,
     ComputeCell,
     CallbackCell,
-};
+}

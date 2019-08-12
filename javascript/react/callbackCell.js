@@ -1,12 +1,13 @@
 import Notifier from './notifier';
 
 export default class CallbackCell {
-    constructor() {
+    constructor(callback) {
+        this.callback = callback;
         this.values = [];
         this.Notifier = new Notifier();
     }
 
-    update(value) {
-        this.values.push(value);
+    update(cell) {
+        this.values.push(this.callback(cell));
     }
 };

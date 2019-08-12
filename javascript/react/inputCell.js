@@ -7,8 +7,9 @@ export default class InputCell {
     }
 
     setValue(value) {
-        if (this.value == value) return;
-        this.value = value;
-        this.Notifier.notify('InputCellUpdated');
+        if (this.value !== value) {
+            this.value = value;
+            this.Notifier.notify('InputCellUpdated');
+        }
     }
 };
