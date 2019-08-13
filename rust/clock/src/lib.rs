@@ -1,37 +1,31 @@
+const DAY: i32 = 24 * 60;
+
 #[derive(Debug, Eq, PartialEq)]
 pub struct Clock {
-    hours: i32,
     minutes: i32,
 }
 
 impl Clock {
-    pub fn new(mut hours: i32, mut minutes: i32) -> Self {
-        hours += minutes / 60;
-        hours %= 24;
-        minutes %= 60;
-
+    pub fn new(hh: i32, mm: i32) -> Self {
+        let mut minutes = (hh*60 + mm) % DAY;
         if minutes < 0 {
-            minutes += 60;
-            hours -= 1;
-        }
-
-        if hours < 0 {
-            hours += 24;
+            minutes += DAY;
         }
 
         Clock {
-            hours,
             minutes,
         }
     }
 
-    pub fn add_minutes(&self, minutes: i32) -> Self {
-        Clock::new(self.hours, self.minutes + minutes)
+    pub fn add_minutes(&self, mm: i32) -> Self {
+        Clock::new(0, self.minutes + mm)
     }
 }
 
 impl ToString for Clock {
     fn to_string(&self) -> String {
-        format!("{:02}:{:02}", self.hours, self.minutes)
+        format!("{:02}:{:02}",
+                self.minutes / 60,
+                self.minutes % 60)
     }
 }
