@@ -1,3 +1,5 @@
+use std::fmt;
+
 const DAY: i32 = 24 * 60;
 
 #[derive(Debug, Eq, PartialEq)]
@@ -22,10 +24,10 @@ impl Clock {
     }
 }
 
-impl ToString for Clock {
-    fn to_string(&self) -> String {
-        format!("{:02}:{:02}",
-                self.minutes / 60,
-                self.minutes % 60)
+impl fmt::Display for Clock {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:02}:{:02}",
+               self.minutes / 60,
+               self.minutes % 60)
     }
 }
