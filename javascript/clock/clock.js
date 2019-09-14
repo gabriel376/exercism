@@ -1,43 +1,30 @@
-function pad(num, wid=2, sym='0') {
-    const str = num.toString();
-    const len = str.length;
-    return len < wid
-        ? new Array(wid-len+1).join(sym) + str
-        : str;
-}
+const DAY = 24 * 60;
 
 export class Clock {
     constructor(hh, mm=0) {
-        hh += parseInt(mm / 60);
-        hh %= 24;
-        if (hh < 0) {
-            hh += 24;
+        this.minutes = (hh*60 + mm) % DAY;
+        if (this.minutes < 0) {
+            this.minutes += DAY;
         }
-
-        mm %= 60;
-        if (mm < 0) {
-            mm += 60;
-            hh = hh == 0 ? 23 : hh - 1;
-        }
-
-        this.mm = mm;
-        this.hh = hh;
     }
 
     toString() {
-        return `${pad(this.hh)}:${pad(this.mm)}`;
+        return [this.minutes/60, this.minutes%60]
+            .map(Math.floor)
+            .map(String)
+            .map(val => val.padStart(2, '0'))
+            .join(':');
     }
 
     plus(mm) {
-        return new Clock(this.hh, this.mm + mm);
+        return new Clock(0, this.minutes + mm);
     }
 
     minus(mm) {
-        return new Clock(this.hh, this.mm - mm);
+        return new Clock(0, this.minutes - mm);
     }
 
     equals(other) {
-        return this.hh === other.hh
-            && this.mm === other.mm;
+        return this.minutes === other.minutes;
     }
 }
