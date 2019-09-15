@@ -1,32 +1,25 @@
-const roman = {
-    1000: 'M',
-    900: 'CM',
-    500: 'D',
-    400: 'CD',
-    100: 'C',
-    90: 'XC',
-    50: 'L',
-    40: 'XL',
-    10: 'X',
-    9: 'IX',
-    5: 'V',
-    4: 'IV',
+const ROMAN = {
     1: 'I',
+    4: 'IV',
+    5: 'V',
+    9: 'IX',
+    10: 'X',
+    40: 'XL',
+    50: 'L',
+    90: 'XC',
+    100: 'C',
+    400: 'CD',
+    500: 'D',
+    900: 'CM',
+    1000: 'M',
 };
 
-const keys = Object.keys(roman)
-    .reverse();
-
-export const toRoman = num => {
-    let key = 0;
-    let str = '';
-    while (keys[key]) {
-        if (num - keys[key] >= 0) {
-            str += roman[keys[key]];
-            num -= keys[key];
-        } else {
-            key++;
-        }
-    }
-    return str;
+export const toRoman = (num) => {
+    return Object.entries(ROMAN)
+        .reverse()
+        .map(([val, cod]) => {
+            const div = Math.floor(num / val);
+            num -= div * val;
+            return cod.repeat(div);
+        }).join('');
 };
