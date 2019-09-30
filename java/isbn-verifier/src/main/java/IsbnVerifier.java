@@ -4,19 +4,11 @@ class IsbnVerifier {
         int pos = 10;
 
         for (char c : input.toCharArray()) {
-            int num = 0;
-
             if (Character.isDigit(c)) {
-                num = Character.digit(c, 10);
-
+                sum += Character.digit(c, 10) * pos--;
             } else if (c == 'X' && pos == 1) {
-                num = 10;
-
-            } else {
-                continue;
+                sum += 10 * pos--;
             }
-
-            sum += num * pos--;
         }
 
         return pos == 0 && sum % 11 == 0;
