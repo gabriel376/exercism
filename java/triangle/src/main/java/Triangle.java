@@ -1,34 +1,31 @@
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
 import java.util.List;
 
 class Triangle {
-    private Set<Double> distinctSides = new HashSet<>();
+    private double min, mid, max;
 
-    Triangle(double side1, double side2, double side3) throws TriangleException {
-        List<Double> sides = Arrays.asList(side1, side2, side3);
+    Triangle(double a, double b, double c) throws TriangleException {
+        List<Double> sides = Arrays.asList(a, b, c);
+        sides.sort(Double::compare);
 
-        Double min = sides.stream().min(Double::compare).get();
-        Double max = sides.stream().max(Double::compare).get();
-        Double sum = sides.stream().mapToDouble(Double::doubleValue).sum();
+        min = sides.get(0);
+        mid = sides.get(1);
+        max = sides.get(2);
 
-        if (min <= 0 || 2*max > sum) {
+        if (min <= 0 || max > min + mid) {
             throw new TriangleException();
         }
-
-        distinctSides.addAll(sides);
     }
 
     boolean isEquilateral() {
-       return distinctSides.size() == 1;
+       return min == max;
     }
 
     boolean isIsosceles() {
-       return distinctSides.size() <= 2;
+       return min == mid || mid == max;
     }
 
     boolean isScalene() {
-       return distinctSides.size() == 3;
+       return min != mid && mid != max;
     }
 }
