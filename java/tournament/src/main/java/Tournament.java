@@ -32,21 +32,33 @@ public class Tournament {
         teams.get(name).applyResult(result);
     }
 
+    private String printHeader() {
+        return String.format(FORMAT, "Team",
+                                     "MP",
+                                     "W",
+                                     "D",
+                                     "L",
+                                     "P");
+    }
+
+    private String printRow(Team team) {
+        return String.format(FORMAT, team.getName(),
+                                     team.getMatches(),
+                                     team.getWins(),
+                                     team.getDraws(),
+                                     team.getLosses(),
+                                     team.getPoints());
+    }
+
     public String printTable() {
-        StringBuilder table = new StringBuilder();
-
-        table.append(String.format(FORMAT, "Team",
-                                           "MP",
-                                           "W",
-                                           "D",
-                                           "L",
-                                           "P"));
-
-       teams.values()
-            .stream()
-            .sorted(COMPARATOR)
-            .forEach(team -> table.append(team.print(FORMAT)));
-
-        return table.toString();
+       return teams.values()
+                   .stream()
+                   .sorted(COMPARATOR)
+                   .map(this::printRow)
+                   .collect(StringBuilder::new,
+                            StringBuilder::append,
+                            StringBuilder::append)
+                   .insert(0, printHeader())
+                   .toString();
     }
 }

@@ -46,15 +46,6 @@ public class Team {
     }
 
     public Integer getPoints() {
-        return (getWins() * 3) + getDraws();
-    }
-
-    public String print(String format) {
-        return String.format(format, getName(),
-                                     getMatches(),
-                                     getWins(),
-                                     getDraws(),
-                                     getLosses(),
-                                     getPoints());
+        return 3*getWins() + getDraws();
     }
 }
