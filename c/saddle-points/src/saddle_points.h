@@ -14,8 +14,10 @@ typedef struct {
     saddle_point_t *points;
 } saddle_points_t;
 
-saddle_points_t* saddlePoints(size_t nrows,
-                              size_t ncols,
-                              uint8_t matrix[nrows][ncols]);
+void free_saddle_points(saddle_points_t* saddle);
+
+saddle_points_t* saddle_points(size_t nrows,
+                               size_t ncols,
+                               uint8_t matrix[nrows][ncols]);
 
 #endif
