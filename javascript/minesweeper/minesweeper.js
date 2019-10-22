@@ -6,17 +6,16 @@ const ADJACENTS = [
 ];
 
 export const annotate = (board) => {
-    return board.map((_, row) =>
-        Array.from(board[row]).map((_, col) => {
-            if (board[row][col] == MINE)
-                return MINE;
+    const isMine = (row, col) => board[row] && board[row][col] == MINE;
 
-            let count = ADJACENTS.reduce((acc, [x, y]) =>
-                board[row + x] && board[row + x][col + y] == MINE
-                    ? acc + 1
-                    : acc
-            , 0);
+    const annotateRow = row => [...board[row]].map((_, col) => annotateField(row, col)).join('');
 
-            return count == 0 ? ' ' : String(count);
-        }).join(''));
+    const annotateField = (row, col) => {
+	if (isMine(row, col)) return MINE;
+	const count = ADJACENTS.filter(([r, c]) => isMine(row+r, col+c)).length;
+	if (count === 0) return ' ';
+	return String(count);
+    }
+
+    return board.map((_, row) => annotateRow(row));
 };
