@@ -17,15 +17,15 @@ export class WordProblem {
         return operators.reduce((result, operator, index) => {
             switch (operator) {
                 case 'plus':
-                    return result + +numbers[index + 1];
+                    return result + numbers[index + 1];
                 case 'minus':
-                    return result - +numbers[index + 1];
+                    return result - numbers[index + 1];
                 case 'multiplied by':
-                    return result * +numbers[index + 1];
+                    return result * numbers[index + 1];
                 case 'divided by':
-                    return result / +numbers[index + 1];
+                    return result / numbers[index + 1];
             }
-        }, +numbers[0]);
+        }, numbers[0]);
     }
 
     valid() {
@@ -34,8 +34,9 @@ export class WordProblem {
     }
 
     numbers() {
-        const regex = /[-]{0,1}\d+/g;
-        return this.question.match(regex);
+        const regex = /-?\d+/g;
+        const numbers = this.question.match(regex);
+        return numbers ? numbers.map(Number) : null;
     }
 
     operators() {
@@ -44,6 +45,6 @@ export class WordProblem {
     }
 }
 
-export class ArgumentError {
+export class ArgumentError extends Error {
 
 }
