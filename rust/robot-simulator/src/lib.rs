@@ -19,28 +19,28 @@ impl Robot {
 
     pub fn turn_right(self) -> Self {
         match self.d {
-            Direction::North => Robot::new(self.x, self.y, Direction::East),
-            Direction::East  => Robot::new(self.x, self.y, Direction::South),
-            Direction::South => Robot::new(self.x, self.y, Direction::West),
-            Direction::West  => Robot::new(self.x, self.y, Direction::North),
+            Direction::North => Self::new(self.x, self.y, Direction::East),
+            Direction::East  => Self::new(self.x, self.y, Direction::South),
+            Direction::South => Self::new(self.x, self.y, Direction::West),
+            Direction::West  => Self::new(self.x, self.y, Direction::North),
         }
     }
 
     pub fn turn_left(self) -> Self {
         match self.d {
-            Direction::North => Robot::new(self.x, self.y, Direction::West),
-            Direction::West  => Robot::new(self.x, self.y, Direction::South),
-            Direction::South => Robot::new(self.x, self.y, Direction::East),
-            Direction::East  => Robot::new(self.x, self.y, Direction::North),
+            Direction::North => Self::new(self.x, self.y, Direction::West),
+            Direction::West  => Self::new(self.x, self.y, Direction::South),
+            Direction::South => Self::new(self.x, self.y, Direction::East),
+            Direction::East  => Self::new(self.x, self.y, Direction::North),
         }
     }
 
     pub fn advance(self) -> Self {
         match self.d {
-            Direction::North => Robot::new(self.x, self.y + 1, self.d),
-            Direction::South => Robot::new(self.x, self.y - 1, self.d),
-            Direction::East  => Robot::new(self.x + 1, self.y, self.d),
-            Direction::West  => Robot::new(self.x - 1, self.y, self.d),
+            Direction::North => Self::new(self.x, self.y + 1, self.d),
+            Direction::South => Self::new(self.x, self.y - 1, self.d),
+            Direction::East  => Self::new(self.x + 1, self.y, self.d),
+            Direction::West  => Self::new(self.x - 1, self.y, self.d),
         }
     }
 
