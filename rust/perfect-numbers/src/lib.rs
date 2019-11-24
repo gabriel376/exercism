@@ -12,10 +12,9 @@ fn aliquot_sum(num: u64) -> u64 {
 }
 
 pub fn classify(num: u64) -> Option<Classification> {
-    if num == 0 {
-        None
-    } else {
-        match aliquot_sum(num).cmp(&num) {
+    match num {
+        0 => None,
+        _ => match aliquot_sum(num).cmp(&num) {
             Ordering::Less => Some(Classification::Deficient),
             Ordering::Equal => Some(Classification::Perfect),
             Ordering::Greater => Some(Classification::Abundant),
