@@ -1,16 +1,20 @@
 pub fn is_valid(code: &str) -> bool {
-    if code.chars().any(|c| c != ' ' && !c.is_ascii_digit()) {
-        return false;
-    }
-
-    let numbers: Vec<u32> = code
-        .chars()
+    code.chars()
         .rev()
-        .filter_map(|c| c.to_digit(10))
-        .enumerate()
-        .map(|(i, n)| if i % 2 == 0 { n } else { 2 * n })
-        .map(|n| if n < 10 { n } else { n - 9 })
-        .collect();
+        .try_fold((0, 0), calculate)
+        .map_or(false, validate)
+}
 
-    numbers.len() > 1 && numbers.iter().sum::<u32>() % 10 == 0
+fn calculate((count, total): (usize, u32), c: char) -> Option<(usize, u32)> {
+    match c {
+        ' ' => Some((count, total)),
+        _ => c.to_digit(10)
+            .map(|n| if count % 2 == 0 { n } else { 2 * n })
+            .map(|n| if n < 10 { n } else { n - 9 })
+            .map(|n| (count + 1, total + n)),
+    }
+}
+
+fn validate((count, total): (usize, u32)) -> bool {
+    count > 1 && total % 10 == 0
 }
