@@ -17,6 +17,6 @@ const resistor_band_t* colors() {
     return COLORS;
 }
 
-int colorCode(resistor_band_t resistor_band) {
+int color_code(resistor_band_t resistor_band) {
     return resistor_band;
 }
