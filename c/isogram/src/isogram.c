@@ -1,30 +1,26 @@
-#include <string.h>
-#include <ctype.h>
 #include "isogram.h"
 
-#define A 65
-#define Z 90
+#include <string.h>
+#include <ctype.h>
 
 bool is_isogram(const char phrase[]) {
-  if (phrase == NULL) {
-    return false;
-  }
-
-  if(strlen(phrase) == 0) {
-    return true;
-  }
-
-  bool letters[26] = { false };
-
-  for (int i = 0; phrase[i] != '\0'; i++) {
-    char c = toupper(phrase[i]);
-    if (c >= A && c <= Z) {
-      if (letters[c - A] == true) {
+    if (phrase == NULL)
         return false;
-      }
-      letters[c - A] = true;
+
+    bool letters[26] = { false };
+    size_t idx = 0;
+
+    for (int i = 0; phrase[i] != '\0'; i++) {
+        if (!isalpha(phrase[i]))
+            continue;
+
+        idx = toupper(phrase[i]) - 'A';
+
+        if (letters[idx])
+            return false;
+
+        letters[idx] = true;
     }
-  }
-  
-  return true;
+
+    return true;
 }
