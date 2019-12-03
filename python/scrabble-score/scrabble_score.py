@@ -1,15 +1,13 @@
-SCORES = {
-    1: 'AEIOULNRST',
-    2: 'DG',
-    3: 'BCMP',
-    4: 'FHVWY',
-    5: 'K',
-    8: 'JX',
-    10: 'QZ',
-}
+from enum import IntEnum
 
-SCORES = {score: letters.upper() + letters.lower() for score, letters in SCORES.items()}
-SCORES = {letter: score for score, letters in SCORES.items() for letter in letters}
+class Letters(IntEnum):
+    A = E = I = O = U = L = N = R = S = T = 1
+    D = G = 2
+    B = C = M = P = 3
+    F = H = V = W = Y = 4
+    K = 5
+    J = X = 8
+    Q = Z = 10
 
 def score(word):
-    return sum(SCORES[letter] for letter in word if letter.isalpha())
+    return sum(Letters[letter] for letter in word.upper() if letter.isalpha())
