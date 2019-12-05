@@ -9,7 +9,7 @@ function main {
 }
 
 function end {
-    echo ${1}
+    echo "${1}"
     exit 0
 }
 
