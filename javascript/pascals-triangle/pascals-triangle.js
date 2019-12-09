@@ -21,6 +21,6 @@ const getRow = (n) => Array(n+1).fill().map((_, k) => binCoef(n, k));
 export class Triangle {
     constructor(num) {
         this.rows = Array(num).fill().map((_, n) => getRow(n));
-        this.lastRow = this.rows.slice(-1)[0];
+        this.lastRow = this.rows[this.rows.length - 1];
     }
 }
