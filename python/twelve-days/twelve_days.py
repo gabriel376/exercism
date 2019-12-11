@@ -33,7 +33,7 @@ VERSE = 'On the {} day of Christmas my true love gave to me: {}{}{}'
 def get_verse(n):
     return VERSE.format(
         ORDINALS[n-1],
-        ', '.join(GIFTS[1:n][::-1]),
+        ', '.join(GIFTS[n-1:0:-1]),
         ', and ' if n > 1 else '',
         GIFTS[0])
 
