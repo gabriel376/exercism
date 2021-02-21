@@ -3,4 +3,5 @@
 (defn slices [string length]
   (if (zero? length)
     [""]
-    (map #(apply str %) (partition length 1 string))))
+    (map (partial apply str)
+         (partition length 1 string))))
