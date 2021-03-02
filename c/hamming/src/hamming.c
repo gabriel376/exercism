@@ -1,24 +1,16 @@
-#include <stddef.h>
 #include "hamming.h"
 
-int compute(const char* const left, const char* const right) {
-  int const error = -1;
-  
-  if (left == NULL || right == NULL) {
-    return error;
-  }
+int compute(const char* lhs, const char* rhs) {
+  if (!lhs || !rhs)
+    return -1;
 
-  int distance = 0;
-  int index = 0;
-  for (index = 0; left[index] != '\0' && right[index] != '\0'; index++) {
-    if (left[index] != right[index]) {
-      distance++;
-    }
-  }
+  int result = 0;
+  for (; *lhs && *rhs; lhs++, rhs++)
+    if (*lhs != *rhs)
+      result++;
 
-  if (left[index] != '\0' || right[index] != '\0') {
-    return error;
-  }
-  
-  return distance;
+  if (*lhs != '\0' || *rhs != '\0')
+    return -1;
+
+  return result;
 }
