@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include "sum_of_multiples.h"
+
+#include <stdlib.h>
 
 unsigned int sum(const unsigned int * const multiples,
                  const unsigned int len,
