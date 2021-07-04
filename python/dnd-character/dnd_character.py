@@ -3,12 +3,12 @@ import random
 import heapq
 
 class Dice():
-    def __init__(self, min, max):
-        self.min = min
-        self.max = max
+    def __init__(self, high, rand=random):
+        self.high = high
+        self.rand = rand
 
     def roll(self, qty):
-        values = [random.randint(self.min, self.max) for _ in range(0, qty)]
+        values = [self.rand.randint(1, self.high) for _ in range(0, qty)]
         return DiceValues(values)
 
 class DiceValues():
@@ -29,7 +29,7 @@ class Character:
         self.hitpoints = 10 + modifier(self.constitution)
 
     def ability(self):
-        return Dice(1, 6).roll(4).top(3).sum()
+        return Dice(6).roll(4).top(3).sum()
 
     def abilities(self):
         return ['strength',
