@@ -11,11 +11,11 @@
 #define OUTER_SCORE  1
 
 int score(coordinate_t coord) {
-    float position = sqrt(pow(coord.x, 2) + pow(coord.y, 2));
+  float position = hypot(coord.x, coord.y);
 
-    if (position <= INNER_RADIUS)  return INNER_SCORE;
-    if (position <= MIDDLE_RADIUS) return MIDDLE_SCORE;
-    if (position <= OUTER_RADIUS)  return OUTER_SCORE;
+  if (position <= INNER_RADIUS)  return INNER_SCORE;
+  if (position <= MIDDLE_RADIUS) return MIDDLE_SCORE;
+  if (position <= OUTER_RADIUS)  return OUTER_SCORE;
 
-    return 0;
+  return 0;
 }
