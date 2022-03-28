@@ -6,7 +6,7 @@ def largest(min_factor, max_factor):
 
 def calculate(low, high, rev):
     if low > high:
-        raise ValueError("min_factor must be >= max_factor")
+        raise ValueError("min must be <= max")
 
     multiples = range(low**2, high**2+1)
     if rev:
