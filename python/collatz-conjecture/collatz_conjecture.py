@@ -1,10 +1,10 @@
-def collatz_steps(num):
-    if num <= 0:
-        raise ValueError("Number must be greater than 0")
+def steps(n):
+    if n <= 0:
+        raise ValueError("Only positive integers are allowed")
 
     steps = 0
-    while num > 1:
+    while n > 1:
         steps += 1
-        num = (num * 3) + 1 if num % 2 else num / 2
+        n = 3 * n + 1 if n % 2 else n / 2
 
     return steps
