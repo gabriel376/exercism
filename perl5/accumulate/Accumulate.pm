@@ -8,9 +8,7 @@ sub accumulate {
   my ($list, $sub) = @_;
   my @accumulated;
 
-  for (@$list) {
-    push(@accumulated, &$sub($_));
-  }
+  push @accumulated, $sub->($_) for @$list;
 
   return \@accumulated;
 }
