@@ -1,6 +1,7 @@
 from itertools import cycle
 
-def prime_candidates():
+
+def candidates():
     yield 2
     yield 3
     yield 5
@@ -9,13 +10,13 @@ def prime_candidates():
         candidate += step
         yield candidate
 
-def prime_factors(number):
-    candidates = prime_candidates()
+
+def factors(number):
     factors = []
-    factor = next(candidates)
-    while number > 1:
+    for factor in candidates():
+        if number == 1:
+            break
         while not number % factor:
-            factors += [factor]
+            factors.append(factor)
             number //= factor
-        factor = next(candidates)
     return factors
