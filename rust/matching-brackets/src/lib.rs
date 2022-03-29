@@ -5,21 +5,16 @@ pub fn brackets_are_balanced(string: &str) -> bool {
     for char in string.chars() {
         match delimiters.find(char) {
             None => (),
-            Some(index) => {
-                if index % 2 == 0 {
-                    stack.push(index+1);
-
-                } else {
-                    match stack.pop() {
-                        None => return false,
-                        Some(value) => {
-                            if index != value {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
+            Some(index) => match index % 2 {
+                0 => stack.push(index + 1),
+                _ => match stack.pop() {
+                    None => return false,
+                    Some(value) => match index == value {
+                        true => (),
+                        false => return false,
+                    },
+                },
+            },
         }
     }
 
