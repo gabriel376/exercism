@@ -11,11 +11,7 @@ ALLERGENS = [
 
 class Allergies:
     def __init__(self, score):
-        self.score = score
+        self.lst = [v for i, v in enumerate(ALLERGENS) if 2**i & score]
 
-    def is_allergic_to(self, item):
+    def allergic_to(self, item):
         return item in self.lst
-
-    @property
-    def lst(self):
-        return [v for i, v in enumerate(ALLERGENS) if 2**i & self.score]
