@@ -1,8 +1,8 @@
 (ns raindrops)
 
 (defn convert [number]
-  (->> {3 "Pling", 5 "Plang", 7 "Plong"}
-       (filter #(zero? (rem number (first %))))
-       (map second)
-       (apply str)
-       (#(if (empty? %) (str number) %))))
+  (cond-> nil
+    (zero? (mod number 3)) (str "Pling")
+    (zero? (mod number 5)) (str "Plang")
+    (zero? (mod number 7)) (str "Plong")
+    :always (or (str number))))
