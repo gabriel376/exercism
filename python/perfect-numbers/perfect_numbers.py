@@ -1,14 +1,13 @@
 import operator
 
-classification = [(operator.lt, 'deficient'),
-                  (operator.eq, 'perfect'),
-                  (operator.gt, 'abundant')]
+classifications = [(operator.lt, 'deficient'),
+                   (operator.eq, 'perfect'),
+                   (operator.gt, 'abundant')]
 
 def classify(number):
     if number <= 0:
-        raise ValueError('invalid input')
+        raise ValueError('Classification is only possible for positive integers.')
 
-    factors = [n for n in range(1, number) if number % n == 0]
-    aliquot_sum = sum(factors)
+    aliquot_sum = sum(n for n in range(1, number) if number % n == 0)
 
-    return [res for ope, res in classification if ope(aliquot_sum, number)][0]
+    return next(result for operation, result in classifications if operation(aliquot_sum, number))
