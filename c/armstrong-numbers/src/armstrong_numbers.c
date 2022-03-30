@@ -1,27 +1,15 @@
 #include "armstrong_numbers.h"
+#include <stdio.h>
+#include <math.h>
 
-static int power(int base, int exp) {
-    int result = 1;
+bool isArmstrongNumber(const int number) {
+  char buffer[32];
+  int sum = 0;
+  int length = sprintf(buffer, "%d", number);
 
-    for (int i = 0; i < exp; i++) {
-        result *= base;
-    }
+  for (int i = 0; i < length; i++) {
+    sum += pow(buffer[i] - '0', length);
+  }
 
-    return result;
-}
-
-bool isArmstrongNumber(int input) {
-    int digits[32];
-    int len = 0;
-    int total = 0;
-
-    for (int num = input; num > 0; num /= 10) {
-        digits[len++] = num % 10;
-    }
-
-    for (int i = 0; i < len; i++) {
-        total += power(digits[i], len);
-    }
-
-    return total == input;
+  return number == sum;
 }
