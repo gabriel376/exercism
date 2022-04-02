@@ -10,7 +10,7 @@
 
 typedef struct {
   uint8_t grade;
-  char *name;
+  char name[MAX_NAME_LENGTH];
 } student_t;
 
 typedef struct {
@@ -18,9 +18,13 @@ typedef struct {
   student_t students[MAX_STUDENTS];
 } roster_t;
 
-bool add_student(char *name, uint8_t grade);
-roster_t get_roster(void);
-roster_t get_grade(uint8_t grade);
-void clear_roster(void);
+void init_roster(roster_t * roster);
+
+bool add_student(roster_t * roster,
+                 const char * name,
+                 uint8_t grade);
+
+roster_t get_grade(const roster_t * roster,
+                   uint8_t grade);
 
 #endif
